@@ -866,14 +866,22 @@
 
 .roadmap__milestone--center {
   justify-content: center;
-  padding: 0 20%;
+  padding: 0 15%;
   text-align: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .roadmap__milestone--center .roadmap__marker {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  left: auto;
+  transform: none;
+  margin-bottom: var(--space-lg);
+}
+
+.roadmap__milestone--center .roadmap__card {
+  max-width: 500px;
+  text-align: center;
 }
 
 /* Marker (Year + Icon) */
@@ -1070,12 +1078,18 @@
     padding: 0;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: flex-start;
   }
 
   .roadmap__milestone--center .roadmap__marker {
     position: relative;
     left: auto;
     transform: none;
+    margin-bottom: 0;
+  }
+
+  .roadmap__milestone--center .roadmap__card {
+    text-align: left;
   }
 }
 
