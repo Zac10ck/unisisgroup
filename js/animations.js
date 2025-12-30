@@ -283,59 +283,95 @@ function initScrollAnimations() {
   animateStaggeredGrid('.gallery__grid', '.gallery__item');
   animateStaggeredGrid('.achievements__grid', '.achievement');
 
-  // Timeline animations
-  initTimelineAnimations();
+  // Roadmap animations
+  initRoadmapAnimations();
 }
 
 /**
- * Timeline Section Animations
+ * Roadmap Journey Animations
  */
-function initTimelineAnimations() {
-  const timelineItems = document.querySelectorAll('.timeline__item');
+function initRoadmapAnimations() {
+  const milestones = document.querySelectorAll('.roadmap__milestone');
 
-  if (!timelineItems.length) return;
+  if (!milestones.length) return;
 
-  timelineItems.forEach((item, index) => {
-    const isLeft = item.classList.contains('timeline__item--left');
-    const startX = isLeft ? -60 : 60;
+  milestones.forEach((milestone, index) => {
+    const isLeft = milestone.classList.contains('roadmap__milestone--left');
+    const isCenter = milestone.classList.contains('roadmap__milestone--center');
+    const startX = isCenter ? 0 : (isLeft ? -80 : 80);
+    const startY = isCenter ? 50 : 30;
 
-    gsap.fromTo(item,
-      {
-        opacity: 0,
-        x: startX,
-        scale: 0.95
-      },
-      {
-        opacity: 1,
-        x: 0,
-        scale: 1,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: item,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
+    const marker = milestone.querySelector('.roadmap__marker');
+    const card = milestone.querySelector('.roadmap__card');
+
+    // Animate marker
+    if (marker) {
+      gsap.fromTo(marker,
+        {
+          opacity: 0,
+          scale: 0.5,
+          y: 30
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.6,
+          ease: 'back.out(1.7)',
+          scrollTrigger: {
+            trigger: milestone,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
         }
-      }
-    );
+      );
+    }
+
+    // Animate card
+    if (card) {
+      gsap.fromTo(card,
+        {
+          opacity: 0,
+          x: startX,
+          y: startY
+        },
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          duration: 0.8,
+          delay: 0.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: milestone,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    }
   });
 
-  // Animate the timeline line drawing
-  const timelineLine = document.querySelector('.timeline__line');
-  if (timelineLine) {
-    gsap.fromTo(timelineLine,
-      { scaleY: 0 },
-      {
-        scaleY: 1,
-        duration: 1.5,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.timeline',
-          start: 'top 70%',
-          toggleActions: 'play none none none'
-        }
+  // Animate SVG path drawing
+  const roadmapPath = document.querySelector('.roadmap__line');
+  if (roadmapPath) {
+    const pathLength = roadmapPath.getTotalLength ? roadmapPath.getTotalLength() : 2000;
+
+    gsap.set(roadmapPath, {
+      strokeDasharray: pathLength,
+      strokeDashoffset: pathLength
+    });
+
+    gsap.to(roadmapPath, {
+      strokeDashoffset: 0,
+      duration: 3,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '.roadmap',
+        start: 'top 60%',
+        toggleActions: 'play none none none'
       }
-    );
+    });
   }
 }
 
