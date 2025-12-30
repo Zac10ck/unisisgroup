@@ -282,6 +282,10 @@ function initScrollAnimations() {
   animateStaggeredGrid('.offices-grid', '.office-card');
   animateStaggeredGrid('.gallery__grid', '.gallery__item');
   animateStaggeredGrid('.achievements__grid', '.achievement');
+  animateStaggeredGrid('.regional__countries', '.country-card');
+
+  // Regional section animations
+  initRegionalAnimations();
 
   // Roadmap animations
   initRoadmapAnimations();
@@ -596,6 +600,84 @@ function initMagneticButtons() {
         ease: 'elastic.out(1, 0.5)'
       });
     });
+  });
+}
+
+/**
+ * Regional Section Animations
+ */
+function initRegionalAnimations() {
+  const regionalSection = document.querySelector('.regional');
+  if (!regionalSection) return;
+
+  // Animate regional stats with stagger
+  const regionalStats = document.querySelectorAll('.regional-stat');
+  gsap.fromTo(regionalStats,
+    {
+      opacity: 0,
+      y: 40,
+      scale: 0.9
+    },
+    {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'back.out(1.4)',
+      scrollTrigger: {
+        trigger: '.regional__stats',
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
+    }
+  );
+
+  // Country card hover effects with GSAP
+  const countryCards = document.querySelectorAll('.country-card');
+  countryCards.forEach(card => {
+    const flag = card.querySelector('.country-card__flag');
+
+    card.addEventListener('mouseenter', () => {
+      if (flag) {
+        gsap.to(flag, {
+          scale: 1.2,
+          rotate: 5,
+          duration: 0.3,
+          ease: 'back.out(1.7)'
+        });
+      }
+    });
+
+    card.addEventListener('mouseleave', () => {
+      if (flag) {
+        gsap.to(flag, {
+          scale: 1,
+          rotate: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+      }
+    });
+  });
+
+  // Animate stat bars on scroll
+  const statBars = document.querySelectorAll('.regional-stat__bar');
+  statBars.forEach(bar => {
+    gsap.fromTo(bar,
+      { scaleX: 0 },
+      {
+        scaleX: 1,
+        duration: 0.6,
+        delay: 0.5,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: bar,
+          start: 'top 90%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
   });
 }
 
