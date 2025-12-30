@@ -541,21 +541,132 @@
   animation: scrollMouse 1.5s ease-in-out infinite;
 }
 
+/* Cinematic Founder Background */
 .hero__founder {
   position: absolute;
-  bottom: 0;
-  right: 5%;
-  width: 280px;
+  top: 0;
+  right: 0;
+  width: 60%;
+  height: 100%;
   opacity: 0;
-  transform: translateY(100px);
   z-index: 1;
+  overflow: hidden;
 }
 
 .hero__founder img {
   width: 100%;
-  height: auto;
-  mask-image: linear-gradient(to top, transparent 0%, black 30%);
-  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 30%);
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0.45;
+  animation: kenBurns 25s ease-in-out infinite alternate;
+  filter: grayscale(20%) contrast(1.1);
+}
+
+/* Ken Burns slow zoom effect */
+@keyframes kenBurns {
+  0% {
+    transform: scale(1) translateX(0);
+  }
+  100% {
+    transform: scale(1.1) translateX(-2%);
+  }
+}
+
+/* Cinematic Gradient Overlay */
+.hero__gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    /* Left side dark gradient for text readability */
+    linear-gradient(90deg,
+      var(--color-primary) 0%,
+      var(--color-primary) 25%,
+      rgba(10, 22, 40, 0.95) 40%,
+      rgba(10, 22, 40, 0.7) 60%,
+      rgba(10, 22, 40, 0.3) 80%,
+      transparent 100%
+    ),
+    /* Bottom gradient */
+    linear-gradient(to top,
+      var(--color-primary) 0%,
+      rgba(10, 22, 40, 0.8) 20%,
+      transparent 50%
+    ),
+    /* Top vignette */
+    linear-gradient(to bottom,
+      rgba(10, 22, 40, 0.6) 0%,
+      transparent 30%
+    );
+  pointer-events: none;
+}
+
+/* Gold Light Leak/Flare Effect */
+.hero__flare {
+  position: absolute;
+  top: 10%;
+  right: 15%;
+  width: 400px;
+  height: 400px;
+  z-index: 3;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(197, 165, 114, 0.15) 0%,
+    rgba(197, 165, 114, 0.05) 40%,
+    transparent 70%
+  );
+  filter: blur(40px);
+  opacity: 0;
+  animation: flareGlow 8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes flareGlow {
+  0% {
+    opacity: 0.5;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1.2) rotate(10deg);
+  }
+}
+
+/* Secondary flare */
+.hero__flare::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(197, 165, 114, 0.2) 0%,
+    transparent 60%
+  );
+  transform: translate(-50%, -50%);
+  filter: blur(20px);
+}
+
+@media (max-width: 1024px) {
+  .hero__founder {
+    width: 70%;
+  }
+
+  .hero__founder img {
+    opacity: 0.35;
+  }
+
+  .hero__flare {
+    width: 300px;
+    height: 300px;
+    right: 10%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -569,7 +680,33 @@
   }
 
   .hero__founder {
-    display: none;
+    width: 100%;
+    opacity: 1;
+  }
+
+  .hero__founder img {
+    opacity: 0.25;
+    object-position: center top;
+  }
+
+  .hero__gradient {
+    background:
+      linear-gradient(180deg,
+        rgba(10, 22, 40, 0.7) 0%,
+        rgba(10, 22, 40, 0.85) 50%,
+        var(--color-primary) 100%
+      ),
+      linear-gradient(90deg,
+        rgba(10, 22, 40, 0.5) 0%,
+        transparent 100%
+      );
+  }
+
+  .hero__flare {
+    width: 200px;
+    height: 200px;
+    top: 5%;
+    right: 5%;
   }
 }
 

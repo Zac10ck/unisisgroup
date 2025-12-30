@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Hero Section Animations
+ * Hero Section Animations - Cinematic Reveal
  */
 function initHeroAnimations() {
   const heroTimeline = gsap.timeline({
@@ -38,21 +38,42 @@ function initHeroAnimations() {
   });
 
   // Set initial states
+  gsap.set('.hero__founder', { opacity: 0, scale: 1.1 });
+  gsap.set('.hero__gradient', { opacity: 0 });
+  gsap.set('.hero__flare', { opacity: 0, scale: 0.8 });
   gsap.set('.hero__label', { opacity: 0, y: 20 });
   gsap.set('.hero__title-line', { opacity: 0, y: 40 });
   gsap.set('.hero__subtitle', { opacity: 0, y: 30 });
   gsap.set('.hero__cta', { opacity: 0, y: 30 });
   gsap.set('.hero__stats', { opacity: 0, y: 40 });
-  gsap.set('.hero__founder', { opacity: 0, x: 50 });
 
   heroTimeline
-    // Label fades in first
+    // Cinematic reveal - founder image fades in FIRST with scale
+    .to('.hero__founder', {
+      opacity: 1,
+      scale: 1,
+      duration: 2,
+      ease: 'power2.out'
+    })
+    // Gradient overlay fades in
+    .to('.hero__gradient', {
+      opacity: 1,
+      duration: 1.5,
+      ease: 'power2.inOut'
+    }, '-=1.5')
+    // Gold flare appears
+    .to('.hero__flare', {
+      opacity: 1,
+      scale: 1,
+      duration: 1.2,
+      ease: 'power2.out'
+    }, '-=1')
+    // Label fades in
     .to('.hero__label', {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      delay: 0.2
-    })
+      duration: 0.8
+    }, '-=0.8')
     // Title lines animate one by one
     .to('.hero__title-line', {
       opacity: 1,
@@ -80,13 +101,6 @@ function initHeroAnimations() {
       duration: 1,
       ease: 'power2.out'
     }, '-=0.5')
-    // Founder image peeks in
-    .to('.hero__founder', {
-      opacity: 1,
-      x: 0,
-      duration: 1.2,
-      ease: 'power2.out'
-    }, '-=0.8')
     // Scroll indicator fades in
     .to('.hero__scroll', {
       opacity: 1,
@@ -148,14 +162,26 @@ function initHeroAnimations() {
     }
   });
 
-  // Founder image parallax on scroll
-  gsap.to('.hero__founder', {
-    y: 100,
+  // Founder image parallax - moves slower (cinematic depth)
+  gsap.to('.hero__founder img', {
+    y: 80,
     scrollTrigger: {
       trigger: '.hero',
       start: 'top top',
       end: 'bottom top',
-      scrub: 1
+      scrub: 0.5
+    }
+  });
+
+  // Gold flare parallax
+  gsap.to('.hero__flare', {
+    y: 50,
+    x: -30,
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1.2
     }
   });
 }
