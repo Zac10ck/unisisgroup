@@ -1257,52 +1257,90 @@
   letter-spacing: var(--tracking-wide);
 }
 
-.achievements-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-lg);
+/* Key Contributions - Long Card Layout */
+.contributions {
+  margin-top: var(--space-2xl);
 }
 
-.achievement-card {
+.contributions__title {
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+  margin-bottom: var(--space-lg);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.contributions__card {
+  display: flex;
+  align-items: stretch;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(197, 165, 114, 0.3);
+  border-radius: var(--radius-lg);
   padding: var(--space-lg);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-md);
+  gap: var(--space-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.contributions__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+}
+
+.contributions__item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
   transition: all var(--transition-base);
 }
 
-.achievement-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--color-accent);
-  transform: translateY(-5px);
+.contributions__item:hover {
+  background: rgba(197, 165, 114, 0.1);
+  border-radius: var(--radius-md);
 }
 
-.achievement-card__icon {
-  width: 50px;
-  height: 50px;
-  background: rgba(197, 165, 114, 0.15);
-  border-radius: var(--radius-md);
+.contributions__divider {
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(197, 165, 114, 0.4), transparent);
+  align-self: stretch;
+}
+
+.contributions__icon {
+  width: 45px;
+  height: 45px;
+  min-width: 45px;
+  background: linear-gradient(135deg, var(--color-accent), rgba(197, 165, 114, 0.6));
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: var(--space-md);
-  color: var(--color-accent);
+  color: var(--color-primary);
+  box-shadow: 0 4px 15px rgba(197, 165, 114, 0.3);
 }
 
-.achievement-card__icon svg {
-  width: 24px;
-  height: 24px;
+.contributions__icon svg {
+  width: 22px;
+  height: 22px;
 }
 
-.achievement-card h5 {
-  font-size: var(--text-base);
-  color: var(--color-white);
-  margin-bottom: var(--space-xs);
-}
-
-.achievement-card p {
+.contributions__text h5 {
   font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--color-white);
+  margin-bottom: 2px;
+}
+
+.contributions__text p {
+  font-size: var(--text-xs);
   color: var(--color-text-light);
+  line-height: 1.4;
 }
 
 @media (max-width: 992px) {
@@ -1318,8 +1356,19 @@
     margin: 0 auto;
   }
 
-  .achievements-grid {
-    grid-template-columns: 1fr;
+  .contributions__card {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .contributions__item {
+    padding: var(--space-md);
+  }
+
+  .contributions__divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(197, 165, 114, 0.4), transparent);
   }
 }
 
