@@ -5,30 +5,21 @@ Official static website for Unisis Group.
 ## Deployment — important
 
 The live site at <https://unisisgroup.com> is **not** served from this
-repository. The domain resolves to `35.213.146.147` (nginx), a separate host
-that receives files by manual upload. Pushing to `main` does **not** update
+repository. The domain is served by a separate host that receives files by upload. Pushing to `main` does **not** update
 the live site.
 
 | Target | URL | Updated by |
 | --- | --- | --- |
-| Live site | https://unisisgroup.com | manual upload to the nginx host |
+| Live site | https://unisisgroup.com | upload to the hosting account |
 | GitHub Pages copy | https://zac10ck.github.io/unisisgroup/ | automatic, on push to `main` |
 
 The GitHub Pages copy is a mirror. Its pages carry a canonical tag pointing at
 `https://unisisgroup.com/`, so search engines will not treat it as duplicate
 content competing with the live domain.
 
-After merging a change, upload the affected files to the live host to make it
-live. `deploy.sh` does this over FTPS:
-
-    ./deploy.sh check     # list the remote web root
-    ./deploy.sh deploy    # upload from the working tree
-    ./deploy.sh verify    # confirm what actually landed on the live URL
-
-Run it from a normal terminal. It prompts for the FTP password with `read -s`,
-so the password is never echoed, never stored in shell history and never
-captured in a transcript. Do not paste the password into a command line, a
-script, or an AI coding session.
+After merging a change, the affected files must be uploaded to the live host
+to appear on unisisgroup.com. That upload step is done outside this repository
+and is not automated here.
 
 ## Local preview
 
