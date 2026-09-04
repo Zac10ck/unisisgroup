@@ -18,8 +18,17 @@ The GitHub Pages copy is a mirror. Its pages carry a canonical tag pointing at
 `https://unisisgroup.com/`, so search engines will not treat it as duplicate
 content competing with the live domain.
 
-After merging a change, upload the affected files to the nginx host to make it
-live. Both destinations should be kept in step.
+After merging a change, upload the affected files to the live host to make it
+live. `deploy.sh` does this over FTPS:
+
+    ./deploy.sh check     # list the remote web root
+    ./deploy.sh deploy    # upload from the working tree
+    ./deploy.sh verify    # confirm what actually landed on the live URL
+
+Run it from a normal terminal. It prompts for the FTP password with `read -s`,
+so the password is never echoed, never stored in shell history and never
+captured in a transcript. Do not paste the password into a command line, a
+script, or an AI coding session.
 
 ## Local preview
 
